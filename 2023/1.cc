@@ -1,35 +1,56 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <algorithm>
+#include <map>
+#include <string>
+#include <vector>
+
+using strings = const std::vector<std::string>;
 
 int main()
 {
-    std::string s{};
-    int sum{};
-    while (std::cin >> s)
+    int p1 = 0;
+    int p2 = 0;
+    const std::string digits = "0123456789";
+    strings words = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+    std::ifstream f("1.input");
+    std::string line;
+    if (f.is_open())
     {
-        // part 1
-        /*
-        int i{};
-        std::find_if(s.begin(), s.end(), [&i](char c)
-                     {
-            if (c >= '0'&& c <= '9')
+        while (std::getline(f, line))
+        {
+            // Map from position to its associated integer value
+            std::map<size_t, unsigned int> positions;
+            // Add the first and last digits to the map, if found
+            size_t first_digit = line.find_first_of(digits);
+            size_t last_digit = line.find_last_of(digits);
+            // If first_digit is found, second_digit must also be found
+            if (first_digit != std::string::npos)
             {
-                i = std::stoi(std::string{ c })*10;
-                return true;
+                positions[first_digit] = line[first_digit] - '0';
+                positions[last_digit] = line[last_digit] - '0';
+                // Increment part 1 answer
+                p1 += 10 * positions[first_digit] + positions[last_digit];
             }
-            return false; });
-        std::find_if(s.rbegin(), s.rend(), [&i](char c)
-                     {
-            if (c >= '0'&& c <= '9')
+            // Add each word's position to the map, if found
+            for (unsigned int i = 0; i < words.size(); i++)
             {
-                i += std::stoi(std::string{ c });return true;
+                size_t pos = line.find(words[i]);
+                while (pos != std::string::npos)
+                {
+                    positions[pos] = i;
+                    pos = line.find(words[i], pos + 1);
+                }
             }
-            return false; });
-        sum += i;
-        */
-
-        // part 2
+            // Increment part 2 answer. Note that maps are sorted by key, so
+            // positions.begin()->second gives the value associated with the smallest
+            // position, while positions.rbegin()->second gives the value of the
+            // largest position.
+            p2 += 10 * positions.begin()->second + positions.rbegin()->second;
         }
-    std::cout << sum << std::endl;
+    }
+    f.close();
+    std::cout << "Part 1: " << p1 << std::endl;
+    std::cout << "Part 2: " << p2 << std::endl;
 }
