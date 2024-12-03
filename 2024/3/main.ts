@@ -1,13 +1,13 @@
 import * as fs from 'fs';
 
-function matchMulPatterns(input: string): number[] {
+function matchMulPatterns(input: string): number {
     // 定义正则表达式，匹配 mul(X,Y) 格式，X 和 Y 都是数字
     const pattern = /mul\(\d+,\d+\)/g;
 
     // 使用正则表达式匹配所有符合条件的子串
     const matches = input.match(pattern);
 
-    let result: number[] = [];
+    let result: number = 0;
     if (!matches) {
         return result;
     }   
@@ -20,7 +20,7 @@ function matchMulPatterns(input: string): number[] {
 
         // 计算乘积
         const product = x * y;
-        result.push(product);
+        result+=product;
         
     }
     return result;
@@ -55,7 +55,7 @@ for (const result of results) {
         flag = true;
     }
     if(flag) {
-        answer += matchMulPatterns(result).reduce((acc, num) => acc + num, 0);
+        answer += matchMulPatterns(result);
     }
 }
 console.log(answer);
