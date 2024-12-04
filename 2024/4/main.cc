@@ -194,7 +194,6 @@ int main()
     int answer{};
     for (const auto &p : x_place)
     {
-        std::cout << p.first << " " << p.second << std::endl;
         // right check
         if (right_check(maps, p))
             answer++;
