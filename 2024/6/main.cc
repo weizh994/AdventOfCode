@@ -178,7 +178,7 @@ int main()
         std::cerr << "No starting point '^' found in the map." << std::endl;
         return 1;
     }
-    Point p{curr.first, curr.second, dir};
+    Point start{curr.first, curr.second, dir};
     int max_row = maps.size();
     int max_col = maps[0].size();
 
@@ -251,13 +251,16 @@ int main()
     }
     std::cout << "Question 1: " << traj.size() << std::endl;
     int answer{};
-    for (size_t i{}; i < maps.size(); ++i)
+    for (int i{}; i < max_row; ++i)
     {
-        for (size_t j{}; j < maps[i].size(); ++j)
+        for (int j{}; j < max_col; ++j)
         {
-            if (simulate({i, j}, maps, p))
+            if (traj.contains({i, j}) and !(i == start.row && j == start.col))
             {
-                answer++;
+                if (simulate({i, j}, maps, start))
+                {
+                    answer++;
+                }
             }
         }
     }
