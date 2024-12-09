@@ -6,10 +6,10 @@ if __name__ == "__main__":
             floor += 1
         elif c == ")":
             floor -= 1
-    print(f"Question 1:{floor}")
+    print(f"Question 1: {floor}")
     floor = 0
     for i, c in enumerate(open("input", "r").read()):
         floor += 1 if c == "(" else -1
         if floor == -1:
-            print(f"Question 2:{i + 1}")
+            print(f"Question 2: {i + 1}")
             break
