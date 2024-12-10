@@ -1,6 +1,3 @@
-from collections import defaultdict
-
-
 def is_nice(line):
     vowels = set("aeiou")
     forbidden = {"ab", "cd", "pq", "xy"}
