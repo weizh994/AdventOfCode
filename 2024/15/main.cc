@@ -202,13 +202,14 @@ int main()
     }
     for (size_t i{}; i < order.size(); ++i)
     {
+        std::cout << "Executing command: " << order[i] << std::endl;
         exec(order[i], robot, map2);
-        // std::this_thread::sleep_for(std::chrono::seconds(0.2));
-        // clearConsole();
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        clearConsole();
 
-        // for (const auto &row : map2)
-        //     std::cout << row << std::endl;
-        // std::cout << std::endl;
+        for (const auto &row : map2)
+            std::cout << row << std::endl;
+        std::cout << std::endl;
     }
     result = 0;
     for (int i{}; i < ROWS; ++i)
