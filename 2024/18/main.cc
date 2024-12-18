@@ -3,7 +3,9 @@
 #include <sstream>
 #include <string>
 #include <vector>
-
+#include <thread>
+#include <chrono>
+#include <cstdlib>
 using namespace std;
 typedef pair<int, int> pii;
 vector<vector<char>> map(71, vector<char>(71, '.'));
@@ -26,6 +28,7 @@ int main()
         auto [row, col] = bytes[i];
         map[row][col] = '#';
     }
+    int tr{70}, tc{70};
 
     int lst = 1023;
     bool found{true};
@@ -67,14 +70,34 @@ int main()
                 }
             }
         }
-        // if (!found)
-        // {
-        //     cout << "No path found" << endl;
-        // }
-        // else
-        // {
-        //     cout << "Shortest path length: " << dist[70][70] << endl;
-        // }
+        if (!found)
+        {
+            cout << "No path found" << endl;
+        }
+        else
+        {
+            cout << "Shortest path length: " << dist[70][70] << endl;
+            // vector<pair<int, int>> path;
+            vector<vector<char>> map_copy(map);
+            int pr = tr, pc = tc;
+            while (pr != -1 && pc != -1)
+            {
+                map_copy[pr][pc] = 'O';
+                // path.push_back({pr, pc});
+                auto [r, c] = prev_pos[pr][pc];
+                pr = r;
+                pc = c;
+            }
+            // reverse(path.begin(), path.end());
+            for (const auto &row : map_copy)
+            {
+                for (char c : row)
+                    cout << c;
+                cout << endl;
+            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+            std::system("clear");
+        }
     }
     cout << bytes[lst].first << "," << bytes[lst].second << endl;
     return 0;
