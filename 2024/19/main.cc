@@ -24,7 +24,7 @@ using namespace std;
 //     }
 //     return memo[design] = false;
 // }
-unsigned long long count_builds(size_t pos, const string &design, const vector<string> &patterns, vector<unsigned long long> &memo)
+long long count_builds(size_t pos, const string &design, const vector<string> &patterns, vector<long long> &memo)
 {
     if (pos == design.size())
         return 1;
@@ -83,8 +83,8 @@ int main()
     unsigned long long total_count{};
     for (const auto &design : designs)
     {
-        vector<unsigned long long> memo(design.size() + 1, -1);
-        unsigned long long count = count_builds(0, design, patterns, memo);
+        vector<long long> memo(design.size() + 1, -1);
+        long long count = count_builds(0, design, patterns, memo);
         if (count)
             result++;
         total_count += count;
